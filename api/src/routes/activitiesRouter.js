@@ -1,13 +1,12 @@
 const { Router } = require('express');
+const {postActivitiesHandler} = require("../handlers/activitiesHandler");
 
 const activitiesRouter = Router();
 
-activitiesRouter.get("/", (req, res) => {
-    res.status(200).send("Estoy pasando Countries");
-});
+activitiesRouter.post("/", postActivitiesHandler);
 
-activitiesRouter.get("/:idPais", (req, res) => {
-    res.status(200).send("Estoy pasando por Countries/Pais");
+activitiesRouter.get("/", (req, res) => {
+    res.status(200).send("Estoy obteniendo las actividades");
 });
 
 module.exports = activitiesRouter;
