@@ -1,8 +1,13 @@
-const postActivitiesHandler = (req, res) => {
+const {createActivity} = require("../controllers/activitiesController");
+const postActivitiesHandler = async (req, res) => {
+    try{
     const {name, difficulty, duration, season} = req.body;
-    res.send(`Voy a crear la actividad ${name} con dificultad ${difficulty} y duración ${duration} en la temporada ${season}`);
+    const newActivity = await createActivity(name, difficulty, duration, season);
+    res.status(201).send(newActivity);
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 };
-
 
 module.exports = {
     postActivitiesHandler,
