@@ -9,27 +9,38 @@ const cleanArray = (arr) =>
     arr.map(elem=>{
         return {
             id: elem.cca3,
-            name: elem.name ? elem.name[Object.keys(elem.name)[1]] : null,
-            flag: elem.flag ? elem.flags[1] : null,
-            continent: elem.continent ? elem.continent : null,
-            capital: elem.capital ? elem.capital[0] : null,
-            subregion: elem.subregion ? elem.subregion : null,
+            name: elem.name ? elem.name[Object.keys(elem.name)[1]] : "No Data Available",
+            flag: elem.flag ? elem.flags[1] : "No Data Available",
+            continent: elem.continent ? elem.continent : "No Data Available",
+            capital: elem.capital ? elem.capital[0] : "No Data Available",
+            subregion: elem.subregion ? elem.subregion : "No Data Available",
             area: elem.area ? elem.area : null,
-            population: elem.population ? elem.population : null,
+            population: elem.population ? elem.population : 0,
         };
     });
 
-//? Determinar si la tabla Country  de la DB esta vacia  || Determinar si existe un determinado país en la DB
-//?Si esta vaciá llamar datos de la API y volcarlos en la DB
-//? Si esta llena mostrar los datos de la DB
+// ? Esta función verifica si la tabla esta vacia, si esta vacia llama a la API y guarda los datos en la DB, si no esta vacia llama a la DB
+async function ifTableCountriesIsEmpty() {
+    const count = await Country.count(); // Cuenta el número de registros en la tabla
+    if (count === 0) {
+        await saveInDb();
+    } else {
+       return await showCountriesFromDb();
+    }
+}
 
-//! Funcion que determina si hay cosas en la DB, si hay cosas muestra la DB y si no llama la API
+// Llama a la función para verificar si la tabla está vacía
+// ifTableCountriesIsEmpty().then();
+
+
+
+//# Función que determina si hay cosas en la DB, si hay cosas muestra la DB y si no llama la API
 const getCountriesHandler = async (req, res) => {
     const  { name } = req.query;
-    const results = name ? await searchCountryByName(name) : await getAllCountriesFromApi();
-    res.status(200).json(results);
+    const results = name ? await searchCountryByName(name) : await ifTableCountriesIsEmpty();
+    // const results = await showCountriesFromDb()
+    res.status(200).send(results);
 };
-
 
 //! Función que trae todos los usuarios de la API
 const getAllCountriesFromApi = async () => {
@@ -51,28 +62,37 @@ const saveInDb = async ()=> {
         };
 }
 
-//! *************************************************************
-/*
-const saveCountries = async () => {
+//! Función que trae todos los countries guardados en la DB y los pinta en pantalla
+
+const showCountriesFromDb = async (req, res) => {
     try {
-        const response = await axios.get('https://restcountries.com/v3/all');
-        const countries = response.data.map(mapCountry);
-        const result = await Country.bulkCreate(countries, { ignoreDuplicates: true });
-        console.log('Countries saved from api:', result.length);
+        const fromDb = await Country.findAll();
+        return fromDb;
+        // console.log(fromDb);
     } catch (error) {
-        console.error('Error while fetching and saving countries:', error);
-        const countries = data.map(mapCountry);
-        const result = await Country.bulkCreate(countries, { ignoreDuplicates: true });
-        console.log('Countries saved from data.json:', result.length);
+        console.error('Error al mostrar los Countries de la DB:', error);
     }
-};
-*/
-
-//! *************************************************************
+}
 
 
+// Render countries from DB
+/*const renderCountriesFromDb = async (req, res) => {
+    req.query = showCountriesFromDb;
+    const countries = await showCountriesFromDb();
+    res.status(200).json(countries);
+}*/
 
-saveInDb().then(r => console.log(r));
+/*async function showCountriesFromDb() {
+    try {
+        const countriesFromDb = await Country.findAll();
+        countriesFromDb.forEach(user => {
+            console.log(`ID: ${user.id} - Name: ${user.name} - Flag: ${user.flag}, - Continent: ${user.continent}, - Capital: ${user.capital}, - Subregion: ${user.subregion}, - Area: ${user.area}, - Population: ${user.population} `);
+            console.log('Datos visualizados desde la DB')
+        });
+    } catch (error) {
+        console.error('Error al mostrar usuarios:', error);
+    }
+}*/
 
 //# Este es el viejo código que funciona bien
 /*const getCountriesHandler = (req, res) => {
