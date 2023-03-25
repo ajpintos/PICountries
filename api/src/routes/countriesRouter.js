@@ -5,7 +5,7 @@ const countriesRouter = Router();
 
 countriesRouter.get("/", getCountriesHandler);
 
-countriesRouter.get("/:id", getCountriesByIdHandler);
+// countriesRouter.get("/:id", getCountriesByIdHandler);
 
 /*countriesRouter.get("/name?=", (req, res) => {
     res.status(200).send("Estoy pasando /Name?=");
