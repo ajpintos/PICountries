@@ -5,20 +5,9 @@ const {createCountries} = require("../controllers/countriesController");
 const {createCountriesInDb, createActivity} = require("../controllers/activitiesController");
 
 
-//! Función que determina, según el ruteo, a donde te manda
-/*const getCountriesHandler = async (req, res) => {
-    const {name, id} = req.query;
-    const results = name ? await searchCountryByName(name) : await req.query.id = true ? await getCountriesByIdHandler(id) : await ifTableCountriesIsEmpty();
-    res.status(200).send(results);
-};*/
-
 const getCountriesHandler = async (req, res) => {
     const { name, id } = req.query;
-    let results = name
-        ? await searchCountryByName(name)
-        : id
-            ? await getCountriesByIdHandler(id)
-            : await ifTableCountriesIsEmpty();
+    let results = name ? await searchCountryByName(name) : id ? await getCountriesByIdHandler(id) : await ifTableCountriesIsEmpty();
     res.status(200).send(results);
 };
 
@@ -86,6 +75,7 @@ const searchCountryByName = async (name) => {
     return byNamefromDb;
 }
 
+//! Función que busca un country por id
 const getCountriesByIdHandler = async (id) => {
     const byIdfromDb = await Country.findAll({where: {id: id}});
     return byIdfromDb;

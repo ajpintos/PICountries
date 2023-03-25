@@ -1,12 +1,10 @@
 const { Router } = require('express');
-const {postActivitiesHandler} = require("../handlers/activitiesHandler");
+const {postActivitiesHandler, getActivitiesHandler} = require("../handlers/activitiesHandler");
 
 const activitiesRouter = Router();
 
 activitiesRouter.post("/", postActivitiesHandler);
 
-activitiesRouter.get("/", (req, res) => {
-    res.status(200).send("Estoy obteniendo las actividades");
-});
+activitiesRouter.get("/", getActivitiesHandler);
 
 module.exports = activitiesRouter;
