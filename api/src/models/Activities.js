@@ -12,14 +12,14 @@ module.exports = (sequelize) => {
         name:{
             type: DataTypes.STRING,
         },
-        dificulty:{
+        difficulty:{
             type: DataTypes.ENUM('1','2','3','4','5'),
         },
         duration:{
             type: DataTypes.STRING,
         },
         season:{
-            type: DataTypes.ENUM('Summer', 'Autumn', 'winter', 'spring'),
+            type: DataTypes.ENUM('Summer', 'Autumn', 'Winter', 'Spring'),
         },
         },
         {timestamps: false})

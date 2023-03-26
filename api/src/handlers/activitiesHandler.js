@@ -13,12 +13,12 @@ const getActivitiesHandler = async (req, res) => {
 
 //! Esta función postea las actividades en la DB
 const postActivitiesHandler = async (req, res) => {
-    try{
-    const {name, difficulty, duration, season} = req.body;
-    const newActivity = await createActivity(name, difficulty, duration, season);
-    res.status(201).send(newActivity);
+    const { name, difficulty, duration, season, countryId } = req.body;
+    try {
+        const newActivity = await createActivity(name, difficulty, duration, season, countryId);
+        res.status(201).json(newActivity);
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message });
     }
 };
 
