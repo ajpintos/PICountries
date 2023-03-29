@@ -15,6 +15,7 @@ const getActivitiesHandler = async (req, res) => {
 const postActivitiesHandler = async (req, res) => {
     const { name, difficulty, duration, season, countryId } = req.body;
     try {
+        if (!name || !difficulty || !duration || !season || !countryId) throw Error("Missing data");
         const newActivity = await createActivity(name, difficulty, duration, season, countryId);
         res.status(201).json(newActivity);
     } catch (error) {

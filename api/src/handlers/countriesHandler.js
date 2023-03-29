@@ -4,6 +4,7 @@ const axios = require('axios');
 const {createCountries, cleanArray} = require("../controllers/countriesController");
 const {createCountriesInDb, createActivity} = require("../controllers/activitiesController");
 
+//! Esta función rutea según el tipo de request
 const getCountriesHandler = async (req, res) => {
     const {name, id} = req.query;
     let results = name ? await searchCountryByName(name) : id ? await getCountriesByIdHandler(id) : await ifTableCountriesIsEmpty();

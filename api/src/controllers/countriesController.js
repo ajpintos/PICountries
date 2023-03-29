@@ -1,7 +1,6 @@
 const {DataTypes} = require("sequelize");
 const {Country, CountriesInDb} = require("../db");
 const axios = require('axios');
-const {createCountries} = require("../controllers/countriesController");
 const {createCountriesInDb, createActivity} = require("../controllers/activitiesController");
 
 //! esta funcion limpia los datos de la API
