@@ -1,7 +1,7 @@
 const {DataTypes} = require("sequelize");
 const {Country, CountriesInDb} = require("../db");
 const axios = require('axios');
-const {createCountries, cleanArray} = require("../controllers/countriesController");
+const {createCountries, cleanArray, saveInDb} = require("../controllers/countriesController");
 const {createCountriesInDb, createActivity} = require("../controllers/activitiesController");
 
 //! Esta función rutea según el tipo de request
