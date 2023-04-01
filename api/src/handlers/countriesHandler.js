@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize");
-const {Country, CountriesInDb} = require("../db");
+const {Country, Activities} = require("../db");
 const axios = require('axios');
 const {createCountries, cleanArray, saveInDb} = require("../controllers/countriesController");
 const {createCountriesInDb, createActivity} = require("../controllers/activitiesController");
@@ -39,8 +39,11 @@ const searchCountryByName = async (name) => {
 
 //! Función que busca un country por id
 const getCountriesByIdHandler = async (id) => {
-    const byIdfromDb = await Country.findAll({where: {id: id}});
-    return byIdfromDb;
+    const byIdfromDb = await Country.findByPk(id);
+    const activities = await byIdfromDb.getActivities({
+        attributes: ['name', 'difficulty', 'duration', 'season']
+    });
+    return [byIdfromDb, ...activities];
 };
 
 module.exports = {

@@ -13,10 +13,10 @@ const getActivitiesHandler = async (req, res) => {
 
 //! Esta función postea las actividades en la DB
 const postActivitiesHandler = async (req, res) => {
-    const { name, difficulty, duration, season, countryId } = req.body;
+    const { name, difficulty, duration, season, country } = req.body;
     try {
-        if (!name || !difficulty || !duration || !season || !countryId) throw Error("Missing data");
-        const newActivity = await createActivity(name, difficulty, duration, season, countryId);
+        if (!name || !difficulty || !duration || !season || !country) throw Error("Missing data");
+        const newActivity = await createActivity(name, difficulty, duration, season, country);
         res.status(201).json(newActivity);
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -4,13 +4,18 @@ import style from './Card.module.css';
 function Card(props) {
     return (
         <div className={style.card}>
-        <p>Nombre:{props.name}</p>
-        <p>Bandera:{props.flag}</p>
-        <p>Continente:{props.continent}</p>
-        <p>Capital:{props.capital}</p>
-        <p>Subregion:{props.subregion}</p>
-        <p>Area:{props.area}</p>
-        <p>Población:{props.population}</p>
+            <p>{props.name}</p>
+            <p>{props.flag}</p>
+            <p>{props.continent}</p>
+            <p>{props.capital}</p>
+            <p>{props.subregion}</p>
+            <p>{props.area}</p>
+            <p>{props.population}</p>
+            <p>{props.difficulty}</p>
+            <p>{props.duration}</p>
+            <p>{props.season}</p>
+
+
         </div>
     );
 }
