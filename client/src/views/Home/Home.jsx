@@ -2,6 +2,7 @@ import CardsContainer from "../../components/CardsContainer/CardsContainer";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {getCountries} from "../../redux/actions";
+import NavBar from "../../components/NavBar/NavBar";
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -10,10 +11,10 @@ const Home = () => {
         dispatch(getCountries());
     },[dispatch])
     return (
-        <>
-        <h1>Esta es la vista de Home</h1>
+        <div>
+        {/*<h1>Esta es la vista de Home</h1>*/}
             <CardsContainer />
-        </>
+        </div>
     )
 }
 

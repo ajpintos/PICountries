@@ -1,7 +1,37 @@
-.mainContainer {
+.navBar {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  border-radius: 15px;
+  background-color: #87cb82;
+  height: 4rem;
+  padding-top: 3rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
 
+
+.columna1 {
+  width: 20%;
+  padding-left: 12rem;
+
+}.columna2 {
+  width: 60%;
+  text-align: center;
+
+}.columna3 {
+  width: 10%;
+  text-align: right;
+  /*padding-right: 12rem;*/
+  }
+
+.columna4 {
+  width: 10%;
+  text-align: right;
+  padding-right: 12rem;
+}
+
+a{
+  text-decoration: none;
+  color: black;
 }

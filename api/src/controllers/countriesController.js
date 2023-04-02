@@ -10,7 +10,7 @@ const cleanArray = (arr) =>
             id: elem.cca3,
             name: elem.name ? elem.name[Object.keys(elem.name)[1]] : "No Data Available",
             flag: elem.flag ? elem.flags[1] : "No Data Available",
-            continent: elem.continent ? elem.continent : "No Data Available",
+            continent: elem.continents ? elem.continents[0] : "No Data Available",
             capital: elem.capital ? elem.capital[0] : "No Data Available",
             subregion: elem.subregion ? elem.subregion : "No Data Available",
             area: elem.area ? elem.area : null,
@@ -25,6 +25,7 @@ const getAllCountriesFromApi = async () => {
     const apiUserRaw = (
         await axios.get("https://restcountries.com/v3/all")
     ).data;
+    console.log("apiUserRaw", apiUserRaw)
     const apiCountries = await cleanArray(apiUserRaw);
     return apiCountries;
 }
