@@ -1,34 +1,35 @@
-import React, {useState} from 'react';
-import Card from '../../components/Card/Card';
-import style from './Detail.module.css';
-import {useParams} from "react-router-dom";
+import style from "./Detail.module.css"
+import {Link, useParams} from "react-router-dom";
+import React from "react";
 
-export default function Detail() {
-    const {id} = useParams()
-    const [countryDetail, setCountryDetail] = React.useState([{}]);
-    React.useEffect(()=>{
-        fetch(`http://localhost:3001/countries/?id=${id}`)
-            .then((res)=>res.json())
-            .then((data)=>{
-                setCountryDetail(data);
-            })
-            .catch((err)=>console.log(err))
-        return() =>  setCountryDetail({});
-    },[id])
+function Detail(props) {
     return (
-        <div className={style.container}>
-            {countryDetail.map(countryDetail=>{
-                return <Card
-                    name={countryDetail.name}
-                    flag={countryDetail.flag}
-                    continent={countryDetail.continent}
-                    capital={countryDetail.capital}
-                    subregion={countryDetail.subregion}
-                    area={countryDetail.area}
-                    difficulty={countryDetail.difficulty}
-                    duration={countryDetail.duration}
-                    season={countryDetail.season}
-                />
-            })}        </div>
+        <div className={style.detail}>
+            <Link to={`/detail/${props.id}`}>
+            <h2>{props.name}</h2></Link>
+            {/*<img src={props.flag} alt="flag" width="250px" height="auto"/>*/}
+            <h3>Continente:<br/>{props.continent}</h3>
+            <h3>Capital: {props.capital}</h3>
+            <h3>Subregion:{props.subregion}</h3>
+            <h3>Area:{props.area}</h3>
+            <h3>Population:{props.population}</h3>
+            {<h2>Actividades</h2>}
+            {props.activities.map( activity => {
+                return (
+                    <div className={style.activity}>
+                        <h3>Nombre{activity.name}</h3>
+                        <h3>Difficulty{activity.difficulty}</h3>
+                        <h3>Duration{activity.duration}</h3>
+                        <h3>Season{activity.season}</h3>
+                    </div>
+                )
+            })}
+
+
+        </div>
     );
-}
+};
+
+export default Detail;
+
+

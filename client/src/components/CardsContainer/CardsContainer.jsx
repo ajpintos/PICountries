@@ -10,6 +10,7 @@ const CardsContainer = () => {
         <div className={style.container}>
             {countries.map(country=>{
                 return <Card
+                id={country.id}
                 name={country.name}
                 flag={country.flag}
                 continent={country.continent}

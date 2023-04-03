@@ -43,7 +43,7 @@ const getCountriesByIdHandler = async (id) => {
     const activities = await byIdfromDb.getActivities({
         attributes: ['name', 'difficulty', 'duration', 'season']
     });
-    return [byIdfromDb, ...activities];
+    return [byIdfromDb, activities];
 };
 
 module.exports = {
