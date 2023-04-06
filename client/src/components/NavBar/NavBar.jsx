@@ -1,13 +1,11 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
 import style from './NavBar.module.css';
+import SearchBar from "../SearchBar/SearchBar";
 
-function NavBar(props) {
+function NavBar({onSearch}) {
     return (
-        /*<div className={style.navBar}>
-            <Link to="/">HOME</Link>
-            <Link to="/create">FORM</Link>
-        </div>*/
+
 
         <div className={style.navBar}>
             <div className={style.columna1}>
@@ -15,7 +13,7 @@ function NavBar(props) {
             </div>
 
             <div className={style.columna2}>
-                <p>Searchbar</p>
+                <SearchBar onSearch={onSearch}/>
             </div>
 
             <div className={style.columna3}>

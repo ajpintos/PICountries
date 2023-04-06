@@ -1,10 +1,25 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Detail from '../../views/Detail/Detail';
 import style from './DetailsContainer.module.css';
 import Card from "../Card/Card";
+import {useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
+import axios from "axios";
+import {GET_COUNTRIES} from "../../redux/actions";
 
-const DetailsContainer = () => {
-    const arrCountryDetail = [
+const DetailsContainer = ({id}) => {
+
+    id=useParams().id;
+    console.log(`El id es ${id}`);
+    async function CountryDetail2(id) {
+        return await axios.get(`http://localhost:3001/countries/?id=${id}`).data; //
+        // TODO: averiguar porque axios no esta funcionando aca
+
+        console.log(`El pais es ${CountryDetail2}(id)`);
+    }
+
+
+    const CountryDetail = [
         {
             "id": "BRA",
             "name": "Federative Republic of Brazil",
@@ -43,18 +58,18 @@ const DetailsContainer = () => {
         ]
     ]
 
+
     return (
-        // <div className={style.container}>
 
                  <Detail
-                    name={arrCountryDetail[0].name}
-                    flag={arrCountryDetail[0].flag}
-                    continent={arrCountryDetail[0].continent}
-                    capital={arrCountryDetail[0].capital}
-                    subregion={arrCountryDetail[0].subregion}
-                    area={arrCountryDetail[0].area}
-                    population={arrCountryDetail[0].population}
-                    activities={arrCountryDetail[1]}
+                    name={CountryDetail[0].name}
+                    flag={CountryDetail[0].flag}
+                    continent={CountryDetail[0].continent}
+                    capital={CountryDetail[0].capital}
+                    subregion={CountryDetail[0].subregion}
+                    area={CountryDetail[0].area}
+                    population={CountryDetail[0].population}
+                    activities={CountryDetail[1]}
                 />
     );
 }
