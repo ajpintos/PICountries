@@ -3,24 +3,24 @@ import {Route, useLocation} from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import DetailsContainer from "./components/DetailsContainer/DetailsContainer";
 import axios from "axios";
-import {useState} from "react";
-import Detail from "./views/Detail/Detail";
+import {useDispatch} from "react-redux";
+import {countryByName} from "./redux/actions";
 
 
 function App() {
     const location = useLocation();
-    const onSearch = (country) => {
+    const dispatch = useDispatch();
+
+    const onSearch = (countryName) => {
         axios
-            .get(
-            `http://localhost:3001/countries/?name=${country}`
-        )
+            .get(`http://localhost:3001/countries/?name=${countryName}`)
             .then((response) => {
-                    setCountriesByName((oldCountry) => [...oldCountry, response.data]);
-                    console.log(countriesByName);
+                dispatch(countryByName(response.data));
+/*                console.log("Este es el contenido de response.data",response.data)
+                console.log("Este es el contenido de countryByName(response.data)",countryByName(response.data));*/
             });
     };
 
-    const [countriesByName, setCountriesByName] = useState([]);
 
     return (
         <div className="App">

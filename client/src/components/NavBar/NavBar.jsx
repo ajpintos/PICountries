@@ -6,7 +6,6 @@ import SearchBar from "../SearchBar/SearchBar";
 function NavBar({onSearch}) {
     return (
 
-
         <div className={style.navBar}>
             <div className={style.columna1}>
                 <p>Logo</p>
