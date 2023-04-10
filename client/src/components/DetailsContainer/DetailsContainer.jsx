@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getCountryById } from '../../redux/actions';
+import * as actions from "../../redux/actions";
 
 const DetailsContainer = () => {
     const countryId = useParams().id;
@@ -13,6 +14,10 @@ const DetailsContainer = () => {
 
     useEffect(() => {
         dispatch(getCountryById(countryId));
+        //TODO solucionar el problema de limpiar el detalle
+/*        return () => {
+            dispatch(actions.cleanDetail());
+        }*/
     }, [dispatch, countryId]);
 
     const country = useSelector((state) => state.countryById);

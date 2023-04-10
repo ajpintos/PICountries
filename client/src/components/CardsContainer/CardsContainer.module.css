@@ -3,6 +3,30 @@
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto;
-  max-width: 1200px;
-  padding-top: 130px;
+  margin-top: 0px;
+  max-width: 90%;
+  padding-top: 0px;
+}
+
+.filters{
+  align-content: center;
+  margin: 150px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  background-color: lightgrey;
+  padding: 10px;
+  box-sizing: border-box;
+  color:black;
+}
+
+select
+{
+  width: 150px;
+  height: 30px;
+  margin: 10px;
+  box-sizing: border-box;
 }
