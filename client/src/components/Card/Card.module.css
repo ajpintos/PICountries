@@ -8,6 +8,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    padding-bottom: 0px;
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;

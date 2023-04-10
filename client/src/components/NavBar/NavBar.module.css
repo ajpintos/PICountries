@@ -16,22 +16,37 @@
   padding-left: 12rem;
 
 }.columna2 {
-  width: 60%;
+  width: 50%;
   text-align: center;
+  margin-right: -100px;
 
 }.columna3 {
-  width: 10%;
+  width: 15%;
   text-align: right;
-  /*padding-right: 12rem;*/
+  link: none;
   }
 
 .columna4 {
-  width: 10%;
+  width: 15%;
   text-align: right;
   padding-right: 12rem;
 }
 
 a{
   text-decoration: none;
-  color: black;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 0.95rem !important;
+
+}a:hover{
+  text-decoration: none;
+  color: yellow;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 0.95rem !important;
+
+}
+
+.logo{
+  position: relative;
+  margin-top: -40px;
 }

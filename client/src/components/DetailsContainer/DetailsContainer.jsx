@@ -24,7 +24,7 @@ const DetailsContainer = () => {
     console.log(`Este es el contenido de country ${country}`);
 
         return (
-
+            <div className={style.container}>
             <Detail
                 name={country[0].name}
                 flag={country[0].flag}
@@ -35,6 +35,7 @@ const DetailsContainer = () => {
                 population={country[0].population}
                 activities={country[1]}
             />
+            </div>
         );
 }
 

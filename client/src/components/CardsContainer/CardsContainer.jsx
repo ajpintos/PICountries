@@ -34,6 +34,7 @@ const CardsContainer = () => {
             name={country.name}
             flag={country.flag}
             continent={country.continent}
+            capital={country.capital}
         />
     })
     const pageCount = Math.ceil(countries.length / usersPerPage);
@@ -74,14 +75,15 @@ const CardsContainer = () => {
             </div>
             <div className={style.container}>
                 {displayCountries}
-                <div className="pagination">
+            </div>
+                <div className={style.pagination}>
                     {pageNumbers.map(number => (
                         <button key={number} onClick={() => setPageNumber(number)}>
                             {number + 1}
                         </button>
                     ))}
                 </div>
-            </div>
+
         </>);
 }
 export default CardsContainer;

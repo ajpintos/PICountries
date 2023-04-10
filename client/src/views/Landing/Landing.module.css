@@ -88,3 +88,9 @@ table {
             background-color: #6abf6a;
             cursor: pointer;
         }
+
+        .logo{
+            margin-top: -150px;
+            margin-bottom: 180px;
+            padding: 0px;
+        }
