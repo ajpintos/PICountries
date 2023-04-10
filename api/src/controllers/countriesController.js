@@ -19,7 +19,7 @@ const cleanArray = (arr) =>
     });
 
 
-//! Función que trae todos los usuarios de la API
+//! Función que trae todos los paises de la API
 const getAllCountriesFromApi = async () => {
     const databaseUsers = await Country.findAll();
     const apiUserRaw = (
