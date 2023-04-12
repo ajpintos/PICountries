@@ -79,9 +79,9 @@ const Form = () => {
         return {id: el, name: arrayCountries[index]};
     });
 
-
     //! Con la carga de la pagina actualizo el estado del estado global countries para que el select del dropdown no
     //! quede vacio
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCountries());
