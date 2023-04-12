@@ -25,6 +25,7 @@ const Form = () => {
         country: [],
     })
 
+
     //! Estado local para guardar los nombres de los paises seleccionados en el select del formulario
     const [countryName, setCountryName] = useState({
         countriesSelected: [],
@@ -63,10 +64,9 @@ const Form = () => {
     const changeHandler = (event) => {
         const property = event.target.name;
         const value = event.target.value;
-        // validate({...form, [property]: value});
         //! Elimina id delay de la validación
         setForm({...form, [property]: value});
-        validate({...form, [property]: value});
+        setErrors(validate({...form, [property]: value}));
     }
 
     //! Guardo en una constante los arrays obtenidos de los estados
@@ -89,26 +89,30 @@ const Form = () => {
 
     //! Función validadora del formulario
     const validate = (form) => {
+        let errors = {};
         //? Validación del campo name
-        if (form.name.length > 2) {
-            setErrors({...errors, name: ""})
-        } else {
-            setErrors({...errors, name: "Name must be at least 3 characters long"})
+        if (!form.name) {
+            errors.name = "Name is required";
+        } else if (form.name.length < 3) {
+            errors.name = "Name must be at least 3 characters long";
         }
-        if (form.name === "") {
-            setErrors({...errors, name: "Name cannot be empty"})
-        }
+
         //? Validación del campo difficulty
-
-        if (form.name.length > 2) {
-            setErrors({...errors, name: ""})
-        } else {
-            setErrors({...errors, name: "Name must be at least 3 characters long"})
-        }
-        if (form.name === "") {
-            setErrors({...errors, name: "Name cannot be empty"})
+        if (!form.difficulty) {
+            errors.difficulty = "Please select a difficulty";
         }
 
+        //? Validación del campo duration
+        if (!form.duration) {
+            errors.duration = "Please select a duration";
+        }
+
+        //? Validación del campo season
+        if (!form.season) {
+            errors.season = "Please select a season";
+        }
+
+        return errors;
     }
 
 
@@ -120,18 +124,20 @@ const Form = () => {
                 .catch(err => alert(err)))
     }
 
+
     return (
         <div className={style.form}>
             <form onSubmit={submitHandler}>
                 <h1>Add your Activity</h1>
                 <div>
-                    <label>Name: </label>
-                    <div><input className={style.inputForm} type="text" value={form.name} onChange={changeHandler}
+                    <label htmlFor="name">Name: </label>
+                    <div><input className={errors.name && style.danger} type="text" value={form.name}
+                    onChange={changeHandler}
                     name="name"></input></div>
-                    {errors.name && <span>{errors.name}</span>}
+                    {errors.name && (<p className={style.danger}>{errors.name}</p>)}
                 </div>
                 <div>
-                    <label>Difficulty (1:Easy, 5: Hard): </label>
+                    <label htmlFor="difficulty">Difficulty (1:Easy, 5: Hard): </label>
                     <div>
                         <input
                             id="difficulty"
@@ -142,14 +148,15 @@ const Form = () => {
                             onChange={changeHandler}
                             name="difficulty"
                         ></input>
-                        <span>{form.difficulty}</span>
+                        {errors.difficulty && (<p className={style.danger}>{errors.difficulty}</p>)}
                     </div>
-                    {errors.difficulty && <span>{errors.difficulty}</span>}
                 </div>
                 <div>
                     <label>Duration: </label>
                     <div>
-                        <select className="style.duration" value={form.duration} onChange={changeHandler}>
+                        <select className="style.duration" value={form.duration} name="duration" defaultValue={'None'}
+                                onChange={changeHandler}>
+                            <option value="None">Select Duration</option>
                             <option value="1">1 Hour</option>
                             <option value="2">2 Hours</option>
                             <option value="3">3 Hours</option>
@@ -164,18 +171,19 @@ const Form = () => {
                             <option value="12">12 Hours</option>
                         </select>
                     </div>
-                    {errors.duration && <span>{errors.duration}</span>}
+                    {errors.duration && (<p className={style.danger}>{errors.duration}</p>)}
                 </div>
                 <div>
                     <label>Season: </label>
-                    <select className="style.season" name="season" value={form.season} onChange={changeHandler}>
+                    <select className="style.season" name="season" value={form.season} onChange={changeHandler}
+                            defaultValue={'None'}>
                         <option disabled="" value="None" selected="">Select Season</option>
                         <option value="Summer">Summer</option>
                         <option value="Autumn">Autumn</option>
                         <option value="Winter">Winter</option>
                         <option value="Spring">Spring</option>
                     </select>
-                    {errors.season && <span>{errors.season}</span>}
+                    {errors.season && (<p className={style.danger}>{errors.season}</p>)}
                 </div>
                 <div>
                     <label>Country: </label>
@@ -184,6 +192,7 @@ const Form = () => {
                             <option value={country.id}>{country.name}</option>
                         ))}
                     </select>
+                    {errors.country && (<p className={style.danger}>{errors.country}</p>)}
                 </div>
                 <button type="submit">Enviar</button>
 
