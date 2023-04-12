@@ -1,7 +1,9 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import axios from "axios";
 import style from "./Form.module.css"
 import {useSelector} from "react-redux";
+import {mergeArrays} from "../../helpers";
+import {logDOM} from "@testing-library/react";
 
 
 const Form = () => {
@@ -22,20 +24,38 @@ const Form = () => {
         country: [],
     })
 
-    //! ******************* Create Activity Countries Select ********************
+    const [countryName, setCountryName] = useState({
+        countriesSelected: [],
+    })
+
+    //!Creo id estado local donde se guardar los nombres de los paises del selected del Form
+    const countriesName = countryName.countriesSelected;
+
+
+    //! guardo id estado global de countries en una constante
     const countries = useSelector(state => state.countries)
+
     const handleSelect = (event) => {
         setForm({
             ...form,
             country: [...form.country, event.target.value]
         })
+        setCountryName({
+            ...countryName,
+            countriesSelected: [...countryName.countriesSelected, event.target.options[event.target.selectedIndex].text]
+        })
     }
     const [renderSelect, setRenderSelect] = useState('')
 
-    const handleDelete = (el) => {
+    const handleDelete = (id, name) => {
+        // console.log(`Esta es el id que llega para borrar ${id} y este es el name ${name}`)
         setForm({
-        ...form,
-        country: form.country.filter((e) => e !== el)
+            ...form,
+            country: form.country.filter((e) => e !== id)
+        })
+        setCountryName({
+            ...countryName,
+            countriesSelected: countryName.countriesSelected.filter((e) => e !== name)
     })
     }
 
@@ -43,10 +63,22 @@ const Form = () => {
         const property = event.target.name;
         const value = event.target.value;
         // validate({...form, [property]: value});
-        //! Elimina el delay de la validación
+        //! Elimina id delay de la validación
         setForm({...form, [property]: value});
         validate({...form, [property]: value});
     }
+
+    //! Guardo en una constante los arrays obtenidos de los estados
+    const arrayForm = form.country
+    console.log("Este es id contenido del arrayForm: ", arrayForm)
+    const arrayCountries = countriesName;
+    console.log("Este es id contenido del arrayCountries: ", arrayCountries)
+
+    const arrayObj = arrayForm.map((el, index) => {
+        return { id: el, name: arrayCountries[index] };
+    });
+
+
     const validate = (form) => {
         let errors = {};
         if (form.name.length < 3) {
@@ -78,7 +110,7 @@ const Form = () => {
     }
 
 
-// ! Esta función envía los datos al servidor cuado se aprieta el botón enviar
+// ! Esta función envía los datos al servidor cuado se aprieta id botón enviar
     const submitHandler = (event) => {
         event.preventDefault()
         const response = axios.post("http://localhost:3001/activities", form)
@@ -86,7 +118,7 @@ const Form = () => {
                 .catch(err => alert(err)))
     }
 
-    return  (
+    return (
         <div className={style.form}>
             <form onSubmit={submitHandler}>
                 <h1>Add your Activity</h1>
@@ -139,12 +171,15 @@ const Form = () => {
                     </select>
                 </div>
                 <button type="submit">Enviar</button>
+
             </form>
-            {form.country.map(el =>
+            {arrayObj.map((el) => (
                 <div className={style.selectCountriesMiniCards}>
-                    <p>{el}</p>
-                    <button className={style.buttonX} onClick={() => handleDelete(el)}> x</button>
-                </div>)}
+                    {/*{console.log(`Este es el contenido ANTERIOR de id ${el.id} y name ${el.name}`)}*/}
+                    <p>{el.name}</p>
+                    <button className={style.buttonX} onClick={() => handleDelete(el.id,el.name)}> x</button>
+                </div>
+            ))}
         </div>
     )
 }

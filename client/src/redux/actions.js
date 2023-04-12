@@ -37,7 +37,6 @@ export const getCountryById = (countryId) => {
     };
 };
 
-
 export const countryByName = (countries) => {
     return {
         type: COUNTRY_BY_NAME,
