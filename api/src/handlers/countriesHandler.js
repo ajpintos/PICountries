@@ -31,9 +31,16 @@ const showCountriesFromDb = async () => {
     }
 }
 
+//! Función que convierte la primera letra de un string en mayúscula
+const nameUpper = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 //! Función que busca un country por nombre
 const searchCountryByName = async (name) => {
-    const byNamefromDb = await Country.findAll({where: {name: {[Op.like]: '%' + name + '%'}}});
+    const nameU = nameUpper(name);
+    console.log("Asi luce el name recibido",)
+    const byNamefromDb = await Country.findAll({where: {name: {[Op.like]: '%' + nameU + '%'}}});
     return byNamefromDb;
 }
 
