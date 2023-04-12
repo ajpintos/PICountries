@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react'
 import axios from "axios";
 import style from "./Form.module.css"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {mergeArrays} from "../../helpers";
 import {logDOM} from "@testing-library/react";
+import {getCountries} from "../../redux/actions";
 
 
 const Form = () => {
@@ -78,6 +79,12 @@ const Form = () => {
         return { id: el, name: arrayCountries[index] };
     });
 
+
+
+    //! Con la carga de la pagina actualizo el estado del estado global countries para que el select del dropdown no
+    //! quede vacio
+    const dispatch = useDispatch();
+    useEffect(()=>{dispatch(getCountries());},[dispatch])
 
     const validate = (form) => {
         let errors = {};
