@@ -50,3 +50,55 @@ a{
   position: relative;
   margin-top: -40px;
 }
+
+@media only screen and (max-width :480px) {
+  .navBar{
+    display:flex;
+    background-color:#87cb82;
+    height:auto;
+    padding-top:.5rem;
+    position:relative;
+    top:auto;
+    left:auto;
+    right:auto;
+    z-index:auto;
+  }
+  .columna1{
+    width:auto;
+    padding-left:.5rem;
+  }
+  .columna2{
+    width:auto;
+    text-align:center;
+    margin-right:-100px;
+  }
+  .columna3{
+    width:auto;
+    text-align:right;
+    link:none;
+  }
+  .columna4{
+    width:auto;
+    text-align:right;
+    padding-right:.5rem;
+  }
+  a{
+    text-decoration:none;
+    color:#fff !important;
+    font-family:'Arial', sans-serif !important;
+    font-size:.8rem !important;
+  }
+  a:hover{
+    text-decoration:none !important;
+    color:#fff !important;
+    background-color:#87cb82 !important;
+    border-radius:.5rem !important;
+    padding:.5rem !important;
+    font-size:.8rem !important;
+    font-weight:bold !important;
+  }
+  .logo{
+    position:relative !important;
+    margin-top:-40px !important;
+  }
+}
