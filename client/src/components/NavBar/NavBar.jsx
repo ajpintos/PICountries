@@ -9,6 +9,8 @@ import {getCountries} from "../../redux/actions";
 function NavBar({onSearch}) {
 
     const dispatch = useDispatch();
+
+    //! Reset de los filtros en el link HOME
     function handleResetFilters(e) {
         dispatch(getCountries());
         // setCurrentPage(1);

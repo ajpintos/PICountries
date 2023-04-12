@@ -128,17 +128,21 @@ const Form = () => {
     return (
         <div className={style.form}>
             <form onSubmit={submitHandler}>
-                <h1>Add your Activity</h1>
-                <div>
-                    <label htmlFor="name">Name: </label>
-                    <div><input className={errors.name && style.danger} type="text" value={form.name}
-                    onChange={changeHandler}
-                    name="name"></input></div>
+                <h1 id={style.title}>ADD YOUR ACTIVITY</h1>
+                <div className={style.divsLabels}>
+                    <label htmlFor="name">Name </label>
+                    <div>
+                </div>
+                    <div className={style.divs}><input className={errors.name && style.danger} type="text" value={form.name}
+                                onChange={changeHandler}
+                                name="name"></input></div>
                     {errors.name && (<p className={style.danger}>{errors.name}</p>)}
                 </div>
-                <div>
-                    <label htmlFor="difficulty">Difficulty (1:Easy, 5: Hard): </label>
-                    <div>
+                    <div className={style.divsLabels}><div>
+                    <label htmlFor="difficulty">Difficulty (1:Easy, 5: Hard) </label>
+                </div>
+                    <div className={style.divs}>
+                        <div className={style.difficultyLevel}>{form.difficulty}</div>
                         <input
                             id="difficulty"
                             type="range"
@@ -147,13 +151,16 @@ const Form = () => {
                             value={form.difficulty}
                             onChange={changeHandler}
                             name="difficulty"
+                            className={style.difficulty}
                         ></input>
                         {errors.difficulty && (<p className={style.danger}>{errors.difficulty}</p>)}
                     </div>
                 </div>
                 <div>
-                    <label>Duration: </label>
-                    <div>
+                    <div className={style.divsLabels}>
+                    <label >Duration </label>
+                    </div>
+                    <div className={style.divs}>
                         <select className="style.duration" value={form.duration} name="duration" defaultValue={'None'}
                                 onChange={changeHandler}>
                             <option value="None">Select Duration</option>
@@ -170,11 +177,14 @@ const Form = () => {
                             <option value="11">11 Hours</option>
                             <option value="12">12 Hours</option>
                         </select>
-                    </div>
                     {errors.duration && (<p className={style.danger}>{errors.duration}</p>)}
+                    </div>
                 </div>
                 <div>
-                    <label>Season: </label>
+                    <div className={style.divsLabels}>
+                    <label className={style.divsLabels}>Season </label>
+                    </div>
+                    <div className={style.divs}>
                     <select className="style.season" name="season" value={form.season} onChange={changeHandler}
                             defaultValue={'None'}>
                         <option disabled="" value="None" selected="">Select Season</option>
@@ -184,19 +194,27 @@ const Form = () => {
                         <option value="Spring">Spring</option>
                     </select>
                     {errors.season && (<p className={style.danger}>{errors.season}</p>)}
+                    </div>
                 </div>
                 <div>
-                    <label>Country: </label>
+                    <div className={style.divsLabels}>
+                    <label>Country </label>
+                    </div>
+                    <div className={style.divs}>
                     <select onChange={(event) => handleSelect(event)}>
                         {countries.map((country) => (
                             <option value={country.id}>{country.name}</option>
                         ))}
                     </select>
                     {errors.country && (<p className={style.danger}>{errors.country}</p>)}
-                </div>
+                    </div>
+                    <div className={style.divs}>
                 <button type="submit">Enviar</button>
+                    </div>
+                </div>
 
             </form>
+            <div className={style.countriesSelected}>
             {arrayObj.map((el) => (
                 <div className={style.selectCountriesMiniCards}>
                     {/*{console.log(`Este es el contenido ANTERIOR de id ${el.id} y name ${el.name}`)}*/}
@@ -204,6 +222,7 @@ const Form = () => {
                     <button className={style.buttonX} onClick={() => handleDelete(el.id, el.name)}> x</button>
                 </div>
             ))}
+            </div>
         </div>
     )
 }
