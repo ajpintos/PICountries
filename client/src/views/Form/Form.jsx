@@ -2,13 +2,12 @@ import {useEffect, useState} from 'react'
 import axios from "axios";
 import style from "./Form.module.css"
 import {useDispatch, useSelector} from "react-redux";
-import {mergeArrays} from "../../helpers";
-import {logDOM} from "@testing-library/react";
 import {getCountries} from "../../redux/actions";
 
 
 const Form = () => {
 
+    //! Estado local para guardar los datos del formulario
     const [form, setForm] = useState({
         name: "",
         difficulty: "",
@@ -17,6 +16,7 @@ const Form = () => {
         country: [],
     })
 
+    //! Estado local para guardar los errores de validación del formulario
     const [errors, setErrors] = useState({
         name: "",
         difficulty: "",
@@ -25,15 +25,16 @@ const Form = () => {
         country: [],
     })
 
+    //! Estado local para guardar los nombres de los paises seleccionados en el select del formulario
     const [countryName, setCountryName] = useState({
         countriesSelected: [],
     })
 
-    //!Creo id estado local donde se guardar los nombres de los paises del selected del Form
+    //! Guardo los datos del estado del select en una constante
     const countriesName = countryName.countriesSelected;
 
 
-    //! guardo id estado global de countries en una constante
+    //! Guardo id estado global de countries en una constante
     const countries = useSelector(state => state.countries)
 
     const handleSelect = (event) => {
@@ -46,7 +47,6 @@ const Form = () => {
             countriesSelected: [...countryName.countriesSelected, event.target.options[event.target.selectedIndex].text]
         })
     }
-    const [renderSelect, setRenderSelect] = useState('')
 
     const handleDelete = (id, name) => {
         // console.log(`Esta es el id que llega para borrar ${id} y este es el name ${name}`)
@@ -57,7 +57,7 @@ const Form = () => {
         setCountryName({
             ...countryName,
             countriesSelected: countryName.countriesSelected.filter((e) => e !== name)
-    })
+        })
     }
 
     const changeHandler = (event) => {
@@ -71,49 +71,44 @@ const Form = () => {
 
     //! Guardo en una constante los arrays obtenidos de los estados
     const arrayForm = form.country
-    console.log("Este es id contenido del arrayForm: ", arrayForm)
+    // console.log("Este es id contenido del arrayForm: ", arrayForm)
     const arrayCountries = countriesName;
-    console.log("Este es id contenido del arrayCountries: ", arrayCountries)
+    // console.log("Este es id contenido del arrayCountries: ", arrayCountries)
 
     const arrayObj = arrayForm.map((el, index) => {
-        return { id: el, name: arrayCountries[index] };
+        return {id: el, name: arrayCountries[index]};
     });
-
 
 
     //! Con la carga de la pagina actualizo el estado del estado global countries para que el select del dropdown no
     //! quede vacio
     const dispatch = useDispatch();
-    useEffect(()=>{dispatch(getCountries());},[dispatch])
+    useEffect(() => {
+        dispatch(getCountries());
+    }, [dispatch])
 
+    //! Función validadora del formulario
     const validate = (form) => {
-        let errors = {};
-        if (form.name.length < 3) {
+        //? Validación del campo name
+        if (form.name.length > 2) {
             setErrors({...errors, name: ""})
         } else {
             setErrors({...errors, name: "Name must be at least 3 characters long"})
         }
-        if (form.difficulty.length < 1 || form.difficulty > 5) {
-            setErrors({...errors, difficulty: ""})
-        } else {
-            setErrors({...errors, difficulty: "Difficulty must be between 1 and 5"})
+        if (form.name === "") {
+            setErrors({...errors, name: "Name cannot be empty"})
         }
-        if (form.duration < 1 || form.duration > 24) {
-            setErrors({...errors, duration: ""})
+        //? Validación del campo difficulty
+
+        if (form.name.length > 2) {
+            setErrors({...errors, name: ""})
         } else {
-            setErrors({...errors, duration: "Duration must be between 1 and 24"})
+            setErrors({...errors, name: "Name must be at least 3 characters long"})
         }
-        if (form.season) {
-            setErrors({...errors, season: ""})
-        } else {
-            setErrors({...errors, season: "Season must be Summer, Autumn, Winter or Spring"})
+        if (form.name === "") {
+            setErrors({...errors, name: "Name cannot be empty"})
         }
-        if (form.country) {
-            setErrors({...errors, country: ""})
-        } else {
-            setErrors({...errors, country: "Country must be fulfilled"})
-        }
-        return errors;
+
     }
 
 
@@ -132,7 +127,7 @@ const Form = () => {
                 <div>
                     <label>Name: </label>
                     <div><input className={style.inputForm} type="text" value={form.name} onChange={changeHandler}
-                                name="name"></input></div>
+                    name="name"></input></div>
                     {errors.name && <span>{errors.name}</span>}
                 </div>
                 <div>
@@ -152,9 +147,22 @@ const Form = () => {
                     {errors.difficulty && <span>{errors.difficulty}</span>}
                 </div>
                 <div>
-                    <label>Duration (in Hours): </label>
-                    <div><input className="style.duration" min="0" max="24" type="number" placeholder="Duration"
-                                id="duration" value={form.duration} onChange={changeHandler} name="duration"></input>
+                    <label>Duration: </label>
+                    <div>
+                        <select className="style.duration" value={form.duration} onChange={changeHandler}>
+                            <option value="1">1 Hour</option>
+                            <option value="2">2 Hours</option>
+                            <option value="3">3 Hours</option>
+                            <option value="4">4 Hours</option>
+                            <option value="5">5 Hours</option>
+                            <option value="6">6 Hours</option>
+                            <option value="7">7 Hours</option>
+                            <option value="8">8 Hours</option>
+                            <option value="9">9 Hours</option>
+                            <option value="10">10 Hours</option>
+                            <option value="11">11 Hours</option>
+                            <option value="12">12 Hours</option>
+                        </select>
                     </div>
                     {errors.duration && <span>{errors.duration}</span>}
                 </div>
@@ -184,7 +192,7 @@ const Form = () => {
                 <div className={style.selectCountriesMiniCards}>
                     {/*{console.log(`Este es el contenido ANTERIOR de id ${el.id} y name ${el.name}`)}*/}
                     <p>{el.name}</p>
-                    <button className={style.buttonX} onClick={() => handleDelete(el.id,el.name)}> x</button>
+                    <button className={style.buttonX} onClick={() => handleDelete(el.id, el.name)}> x</button>
                 </div>
             ))}
         </div>
