@@ -8,20 +8,34 @@ import {filterByContinent, sortByName, sortByPopulation} from "../../redux/actio
 const CardsContainer = () => {
 //! ************** FILTROS *********************
     const dispatch = useDispatch()
+
+    //! ************** FILTRO POR CONTINENTE *********************
     function handleFilterByContinent(event) {
         dispatch(filterByContinent(event.target.value))
+        goToFirstPage();
     }
+
+    //! ************** ORDENAMIENTO ALFABÉTICO POR NOMBRE *********************
     function handleSortByName(event) {
         event.preventDefault()
+
         dispatch(sortByName(event.target.value))
         setOrden(`Ordenado ${event.target.value}`)
     };
     const [orden, setOrden] = useState('')
+
+    //! ************** ORDENAMIENTO POR POBLACIÓN *********************
     function handleSortByPopulation(event) {
         event.preventDefault()
         dispatch(sortByPopulation(event.target.value))
         setOrden(`Ordenado ${event.target.value}`)
     };
+
+    //! FUNCION PARA QUE LOS FILTROS VAYAN SIEMPRE A LA PRIMERA PAGINA DE PAGINADO
+    const goToFirstPage = () => {
+        setPageNumber(0);
+    };
+
 //! ************** PAGINADO *********************
     const countries = useSelector(state => state.countries)
     const [pageNumber, setPageNumber] = useState(0);
